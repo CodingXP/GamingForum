@@ -7,16 +7,13 @@ import NoPage from "./pages/NoPage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Forum from "./pages/Forum";
-import logo from "./logo.png";
 class App extends Component {
   render() {
     return (
       <Router>
         <div className="App">
           <div className="appHeader">
-            <Link to="/">
-              <img src={logo} className="logo" alt="Forum logo"></img>
-            </Link>
+            <Link to="/" className="logo"></Link>
             <div className="navBar">
               <NavLink route="/" btn="Home" />
               <NavLink route="/about" btn="About" />

@@ -10,15 +10,14 @@ body {
 }
 
 .appHeader {
-    min-width: 1024px;
+  min-width: 1024px;
 
   width: 100%;
   height: 100px;
 
-  position: fixed;
   top: 0;
   left: 0;
-  background-image: url("header.jpg");
+  background-image: url("/public/header.jpg");
   image-rendering: pixelated;
 
 }
@@ -48,8 +47,22 @@ body {
 }
 
 .logo {
-  width: 250px;
+  width: 263px;
   height: 40px;
   image-rendering: pixelated;
   display: flex;
+
+  background-image: url(/public/logo.png);
+}
+
+.bg {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: -20px;
+  background-image: url(/public/background.png);
+  height: 100%;
+}
+
+.register {
 }
