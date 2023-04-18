@@ -9,6 +9,10 @@ body {
   margin: 0;
 }
 
+p {
+  font-family: "Stardew Valley";
+}
+
 .appHeader {
   min-width: 1024px;
 
@@ -17,7 +21,7 @@ body {
 
   top: 0;
   left: 0;
-  background-image: url("/public/header.jpg");
+  background-image: url("/src/images/header.jpg");
   image-rendering: pixelated;
 
 }
@@ -34,6 +38,7 @@ body {
   height: 40px;
 }
 
+
 .button:hover {
   background-color: #e2a662;
 }
@@ -44,25 +49,73 @@ body {
 .navBar {
   display: flex;
   align-items: center;
+  margin-left: 50px;
 }
 
 .logo {
   width: 263px;
-  height: 40px;
+  margin: auto;
+  height: 36px;
   image-rendering: pixelated;
-  display: flex;
+  background-image: url(/src/images/logo.png);
+}
 
-  background-image: url(/public/logo.png);
+.headerLogo {
+  display: flex;
+  justify-content: center;
+}
+
+.userBtns {
+  display: flex;
+  position: absolute;
+  right: 50px;
 }
 
 .bg {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  margin-top: -20px;
-  background-image: url(/public/background.png);
-  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  background-image: url(./images/background.png);
 }
 
-.register {
+.postPopup {
+  margin: auto;
+  height: 500px;
+  width: 800px;
+  background: #fec375;
+  border: 2px solid #672b0c;
+  padding: 5px;
 }
+
+.postName {
+ font-family: "Stardew Valley"; 
+ /* margin-left: 100px; */
+ /* margin-top: 50px; */
+ width: 150px;
+ height: 35px;
+ background-color: #e2a662;
+ border: #571404 solid 2px;
+}
+
+.postDesc {
+  font-family: "Stardew Valley";
+  /* margin-left: 100px; */
+  /* margin-top: 50px; */
+  width: 600px;
+  height: 250px;
+}
+
+.popup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.postTop {
+  /* float: left; */
+}
+
+.closeBtn {
+  /* margin-left: 700px; */
+}
+

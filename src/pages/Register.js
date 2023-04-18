@@ -4,9 +4,24 @@ import { useAsyncError } from "react-router-dom";
 
 
 function Register() {
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [result, setResult] = useState("");
+
+  const handleNameChange = function(e) {
+    setName(e.target.value);
+  }
+
+  const handleSurnameChange = function(e) {
+    setSurname(e.target.value);
+  }
+
+  const handleEmailChange = function(e) {
+    setEmail(e.target.value);
+  }
 
   const handleUserChange = function(e) {
     setUsername(e.target.value);
@@ -15,6 +30,7 @@ function Register() {
   const handlePassChange = function(e) {
     setPassword(e.target.value)
   }
+  
 
   const handleSubmit = function(e) {
     e.preventDefault();
@@ -29,17 +45,19 @@ function Register() {
       },
     });
   };
-
-
-
   return(
-    <div className="bg register">
-      <form action="http://localhost:8000/index.php" method="POST" onSubmit={(event) => handleSubmit(event)}>
-        <input type="text" id="user" name="user" value={username} onChange={(event) => handleUserChange(event)}></input>
-        <input type="password" id="pass" name="pass" value={password} onChange={(event) => handlePassChange(event)}></input>
-        <button type="submit">Register</button>
-      </form>
-      <h1>{result}</h1>
+    <div className="bg">
+      <div className="register">
+        <form action="http://localhost:8000/register.php" method="POST" onSubmit={(event) => handleSubmit(event)}>
+          <input type="text" id="name" name="name" value={name} onChange={(event) => handleNameChange(event)} placeholder="Name"></input>
+          <input type="text" id="surname" name="surname" value={surname} onChange={(event) => handleSurnameChange(event)} placeholder="Surname"></input>
+          <input type="text" id="email" name="email" value={email} onChange={(event) => handleEmailChange(event)} placeholder="Email"></input>
+          <input type="text" id="username" name="username" value={username} onChange={(event) => handleUserChange(event)} placeholder="Username"></input>
+          <input type="password" id="password" name="password" value={password} onChange={(event) => handlePassChange(event)} placeholder="Password"></input>
+          <button type="submit" name="register">Register</button>
+        </form>
+        <h1>{result}</h1>
+      </div>
     </div>
   );
 }

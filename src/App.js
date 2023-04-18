@@ -13,14 +13,18 @@ class App extends Component {
       <Router>
         <div className="App">
           <div className="appHeader">
-            <Link to="/" className="logo"></Link>
+            <div className="headerLogo">
+              <Link to="/" className="logo"></Link>
+            </div>
             <div className="navBar">
               <NavLink route="/" btn="Home" />
+              <NavLink route="/forum" btn="Forum" />
               <NavLink route="/about" btn="About" />
               <NavLink route="/404" btn="404" />
-              <NavLink route="/register" btn="Register" />
-              <NavLink route="/login" btn="Login" />
-              <NavLink route="/forum" btn="Forum" />
+              <div className="userBtns">
+                <NavLink route="/register" btn="Register" />
+                <NavLink route="/login" btn="Login" />
+              </div>
             </div>
           </div>
 
