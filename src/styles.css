@@ -26,6 +26,12 @@ p {
 
 }
 
+.input {
+  font-family: "Stardew Valley"; 
+  background-color: #e2a662;
+  border: #571404 solid 2px;
+}
+
 .button {
   background-color: #fec375;
   border: 2px solid #672b0c;
@@ -71,12 +77,20 @@ p {
   right: 50px;
 }
 
-.bg {
-  background-position: center;
+.regPopup {
+  margin: auto;
+  height: 500px;
+  width: 300px;
+  background: #fec375;
+  border: 2px solid #672b0c;
+  padding: 5px;
+}
+
+
+body {
   background-repeat: no-repeat;
+  background-position: center;
   background-size: cover;
-  max-width: 100%;
-  max-height: 100%;
   background-image: url(./images/background.png);
 }
 
@@ -89,33 +103,66 @@ p {
   padding: 5px;
 }
 
-.postName {
- font-family: "Stardew Valley"; 
- /* margin-left: 100px; */
- /* margin-top: 50px; */
- width: 150px;
- height: 35px;
- background-color: #e2a662;
- border: #571404 solid 2px;
+.postTitle {
+ width: 400px;
+ height: 34px;
+ margin-left: 10px;
 }
 
 .postDesc {
-  font-family: "Stardew Valley";
-  /* margin-left: 100px; */
-  /* margin-top: 50px; */
   width: 600px;
-  height: 250px;
+  margin-top: 7.5px;
+  height: 150px;
+  resize: none;
+  margin-left: 100px;
 }
 
 .popup-overlay {
   background: rgba(0, 0, 0, 0.5);
 }
 
-.postTop {
-  /* float: left; */
+.createPostDiv {
+  display: flex;
+  justify-content: space-between;
 }
 
-.closeBtn {
-  /* margin-left: 700px; */
+.postTitleDiv {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  
 }
 
+.userDrop {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0,2);
+  z-index: 1;
+}
+
+.userDrop button {
+  background-color: #fec375;
+  font-family: "Stardew Valley";
+  color: #571404;
+  border: 2px solid #672b0c;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  text-align: center;
+  width: 100px;
+  height: 40px;
+}
+
+.userDrop button:hover {
+  background-color:#e2a662;
+}
+
+.dropdown:hover .userDrop {
+  display: block;
+}
+
+li.dropdown {
+  display: inline-block;
+}

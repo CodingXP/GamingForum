@@ -6,14 +6,21 @@ function logUser($user, $pass) {
     $user = dataValidation($user, $conn);
     $pass = dataValidation($pass, $conn);
 
-    $query = "SELECT * FROM users WHERE username = '$user' AND PASSWORD = '$pass'";
-    $result = $conn->query($query);
-    // Row currently is unecessary, but it might prove useful when I need user data (name, email, etc.)
-    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    $count = mysqli_num_rows($result);
+    $userQuery = "SELECT * FROM users WHERE username = '$user' AND PASSWORD = '$pass'";
+    $userResult = $conn->query($userQuery);
+    $adminQuery = "SELECT * FROM admin WHERE username = '$user' AND PASSWORD = '$pass'";
+    $adminResult = $conn->query(($adminQuery));
 
-    if ($count === 1) {
-        echo "Login Succesful";
+    $userRow = mysqli_fetch_array($userResult, MYSQLI_ASSOC);
+    $userCount = mysqli_num_rows($userResult);
+    $adminRow = mysqli_fetch_array($adminResult, MYSQLI_ASSOC);
+    $adminCount = mysqli_num_rows($adminResult);
+
+    if ($userCount === 1) {
+        echo "Login Success";
+    }
+    else if($adminCount === 1){
+        echo "Login Success";
     }
     else {
         echo "Login Unsuccesful";
