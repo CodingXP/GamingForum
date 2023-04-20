@@ -30,6 +30,8 @@ p {
   font-family: "Stardew Valley"; 
   background-color: #e2a662;
   border: #571404 solid 2px;
+  height: 30px;
+  margin-bottom: 10px;
 }
 
 .button {
@@ -74,18 +76,46 @@ p {
 .userBtns {
   display: flex;
   position: absolute;
-  right: 50px;
+  right: 100px;
 }
 
 .regPopup {
+  position: relative;
   margin: auto;
-  height: 500px;
+  height: 350px;
   width: 300px;
   background: #fec375;
   border: 2px solid #672b0c;
-  padding: 5px;
+  border-top: 4px solid #672b0c;
 }
 
+.logPopup {
+  position: relative;
+  margin: auto;
+  height: 230px;
+  width: 200px;
+  background: #fec375;
+  border: 2px solid #672b0c;
+  border-top: 4px solid #672b0c;
+}
+
+.logFields {
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logImg {
+  margin-left: 40px;
+}
+
+.logInput {
+  color: #ce5252;
+  background-color: #ffd789;
+  font-weight: 600;
+}
 
 body {
   background-repeat: no-repeat;
@@ -115,6 +145,12 @@ body {
   height: 150px;
   resize: none;
   margin-left: 100px;
+}
+
+.descImg {
+  display: flex;
+  margin-left: 264px;
+  margin-top: 30px; 
 }
 
 .popup-overlay {

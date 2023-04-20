@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Popup from "reactjs-popup";
 import post from "../images/post.png"
-import postTitle from "../images/postTitle.png";
-import postDesc from "../images/postDesc.png";
+import postTitleImg from "../images/postTitle.png";
+import postDescImg from "../images/postDesc.png";
 
 function Forum() {
   const [postTitle, setPostTitle] = useState("");
@@ -44,13 +44,11 @@ function Forum() {
               </div>
               <form action="http://localhost:8000/forum.php" method="POST" onSubmit={(event) => handleSubmit(event)}>
                 <div className="postTitleDiv">
-                  <img alt="Write a post title:" src={postTitle}></img>
-                  <div>
-                    <input id="title" name="title" value={postTitle} onChange={(event) => handleTitleChange(event)} className="input postTitle" type="text"></input>
-                  </div>
+                  <img alt="Write a post title:" src={postTitleImg}></img>
+                  <input id="title" name="title" value={postTitle} onChange={(event) => handleTitleChange(event)} className="input postTitle" type="text"></input>
                 </div>
                 <div>
-                  <img alt="Write the post's description:" src={postDesc}></img>
+                  <img alt="Write the post's description:" src={postDescImg} className="descImg"></img>
                   <textarea id="desc" name="desc" value={postDesc} onChange={(event) => handleDescChange(event)} className="input postDesc" type="text"></textarea>
                 </div>
                 <div>

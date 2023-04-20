@@ -14,7 +14,7 @@ function regUser($name, $surname, $email, $user, $pass) {
     $query = "INSERT INTO users (name, surname, email, username, PASSWORD) 
         VALUES ('{$name}', '{$surname}', '{$email}', '{$user}', '{$pass}')";
 
-    echo "Register successful";
+    echo $user;
 
     $conn->query($query);
     // Close opened connection.

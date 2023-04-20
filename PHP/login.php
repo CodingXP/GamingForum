@@ -11,19 +11,11 @@ function logUser($user, $pass) {
     $adminQuery = "SELECT * FROM admin WHERE username = '$user' AND PASSWORD = '$pass'";
     $adminResult = $conn->query(($adminQuery));
 
-    $userRow = mysqli_fetch_array($userResult, MYSQLI_ASSOC);
     $userCount = mysqli_num_rows($userResult);
-    $adminRow = mysqli_fetch_array($adminResult, MYSQLI_ASSOC);
     $adminCount = mysqli_num_rows($adminResult);
 
-    if ($userCount === 1) {
-        echo "Login Success";
-    }
-    else if($adminCount === 1){
-        echo "Login Success";
-    }
-    else {
-        echo "Login Unsuccesful";
+    if ($userCount === 1 || $adminCount === 1) {
+        echo($user);
     }
 
     closeCon($conn);

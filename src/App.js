@@ -7,7 +7,10 @@ import About from "./pages/About";
 import Home from "./pages/Home";
 import NoPage from "./pages/NoPage";
 import Forum from "./pages/Forum";
+import Profile from "./pages/Profile";
 import Popup from "reactjs-popup";
+import loginImg from "./images/loginImg.png";
+import registerImg from "./images/registerImg.png";
 class App extends Component {
   render() {
     return (
@@ -22,11 +25,7 @@ class App extends Component {
               <NavLink route="/forum" btn="Forum" />
               <NavLink route="/about" btn="About" />
               <NavLink route="/404" btn="404" />
-              <div className="userBtns">
-                <Register />
-                <Login />
-                <User username={""} />
-              </div>
+              <NavBarUser />  
             </div>
           </div>
           <Routes>
@@ -34,6 +33,7 @@ class App extends Component {
             <Route path="/About" element={<About />}></Route>
             <Route path="*" element={<NoPage />}></Route>
             <Route path="/Forum" element={<Forum />}></Route>
+            <Route path="/Profile" element={<Profile />}></Route>
           </Routes>
         </div>
       </Router>
@@ -51,27 +51,14 @@ function NavLink({ route, btn }) {
   );
 }
 
-function User({username}) {
-  return (
-    <li className="dropdown">
-      <div>
-      <button className="button">{username}</button>
-      <div className="userDrop">
-        <button>Profile</button>
-        <button>Log out</button>
-      </div>
-      </div>
-    </li>
-  );
-}
-
-function Register() {
+function NavBarUser() {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [result, setResult] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleNameChange = function(e) {
     setName(e.target.value);
@@ -93,10 +80,19 @@ function Register() {
     setPassword(e.target.value)
   }
   
+  const handleLogout = function() {
+    setResult("");
+    setIsLoggedIn((isLoggedIn) => !isLoggedIn);
+  }
 
   const handleSubmit = function(e) {
     e.preventDefault();
     const form = $(e.target);
+    setUsername("");
+    setPassword("");
+    setName("");
+    setSurname("");
+    setEmail("");
 
     $.ajax({
       type: "POST",
@@ -104,13 +100,15 @@ function Register() {
       data: form.serialize(),
       success(data) {
         setResult(data);
+        setIsLoggedIn(true);
       },
     });
   };
 
   return (
+  <div className="userBtns">
     <div>
-      <Popup trigger={
+      {!isLoggedIn && <Popup trigger={
         <button className="button">Register</button>
       } position="bottom center">
         {
@@ -118,6 +116,7 @@ function Register() {
             <div className="regPopup">
               <form action="http://localhost:8000/register.php" method="POST" onSubmit={(event) => handleSubmit(event)}>
                 <div>
+                  <img src={registerImg} alt="Register" className="registerImg"></img>
                   <input className="input" type="text" id="name" name="name" value={name} onChange={(event) => handleNameChange(event)} placeholder="Name"></input>
                   <input className="input" type="text" id="surname" name="surname" value={surname} onChange={(event) => handleSurnameChange(event)} placeholder="Surname"></input>
                   <input className="input" type="text" id="email" name="email" value={email} onChange={(event) => handleEmailChange(event)} placeholder="Email"></input>
@@ -129,59 +128,42 @@ function Register() {
             </div>
           )
         }
-      </Popup>
+      </Popup>}
     </div>
-  );
-}
-
-function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [result, setResult] = useState("");
-
-  const handleUserChange = function(e) {
-    setUsername(e.target.value);
-  };
-
-  const handlePassChange = function(e) {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = function(e) {
-    e.preventDefault();
-    const form = $(e.target);
-
-    $.ajax({
-      type: "POST",
-      url: form.attr("action"),
-      data: form.serialize(),
-      success(data) {
-        setResult(data);
-      },
-    });
-  }
-
-  return(
-    <div className="bg">
-      <Popup trigger={
-        <button className="button">Login</button>
-      } position="bottom center">
-        {
-          close => (
-            <div className="logPopup">
-              <form action="http://localhost:8000/login.php" method="POST" onSubmit={(event) => handleSubmit(event)}>
-                <div>
-                  <input type="text" id="username" name="username" value={username} onChange={(event) => handleUserChange(event)} placeholder="Username"></input>
-                  <input type="password" id="password" name="password" value={password} onChange={(event) => handlePassChange(event)} placeholder="Password"></input>
-                  <button type="submit">Login</button>
-                </div>
-              </form>
-            </div>
-          )
-        }
-      </Popup>
-      <h2>{result}</h2>
+    <div>
+    {!isLoggedIn && <Popup trigger={
+      <button className="button">Login</button>
+    } position="bottom center">
+      {
+        close => (
+          <div className="logPopup">
+            <form className="logFields" action="http://localhost:8000/login.php" method="POST" onSubmit={(event) => handleSubmit(event)} spellCheck="false">
+            <img className="logImg" alt="Login" src={loginImg}></img>
+              <div>
+                <input className="input logInput" type="text" id="username" name="username" value={username} onChange={(event) => handleUserChange(event)} placeholder="Username"></input>
+                <input className="input logInput" type="password" id="password" name="password" value={password} onChange={(event) => handlePassChange(event)} placeholder="Password"></input>
+                <button className="button" type="submit">Login</button>
+              </div>
+            </form>
+          </div>
+        )
+      }
+      </Popup>}
     </div>
+    <div>
+    {isLoggedIn && <li className="dropdown">
+      <div>
+        <button className="button">{result}</button>
+        <div className="userDrop">
+          <NavLink route="/profile" btn="Profile" />
+          <Link to={"/"}>
+            <button className="button logButton" onClick={handleLogout}>{"Logout"}</button>
+          </Link>
+        </div>
+      </div>
+    </li>}
+    </div>
+  </div>
   );
 }
 
