@@ -7,6 +7,10 @@ html,
 body {
   padding: 0;
   margin: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url(./images/background.png);
 }
 
 p {
@@ -42,6 +46,7 @@ p {
   text-align: center;
   text-decoration: none;
   font-size: 16px;
+  font-weight: 800;
   width: 100px;
   height: 40px;
 }
@@ -89,6 +94,20 @@ p {
   border-top: 4px solid #672b0c;
 }
 
+.regFields {
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.regImg {
+  margin-top: 35px ;
+  margin-left: 30px;
+}
+
+
 .logPopup {
   position: relative;
   margin: auto;
@@ -111,18 +130,13 @@ p {
   margin-left: 40px;
 }
 
-.logInput {
+.userInput {
   color: #ce5252;
+  font-family: "Stardew Valley";
   background-color: #ffd789;
   font-weight: 600;
 }
 
-body {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-image: url(./images/background.png);
-}
 
 .postPopup {
   margin: auto;
