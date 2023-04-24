@@ -1,12 +1,25 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import Popup from "reactjs-popup";
 import post from "../images/post.png"
 import postTitleImg from "../images/postTitle.png";
 import postDescImg from "../images/postDesc.png";
+import $ from "jquery";
 
 function Forum() {
   const [postTitle, setPostTitle] = useState("");
   const [postDesc, setPostDesc] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+  const [result, setResult] = useState("");
+  var today = new Date();
+  const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+  useEffect(() => {
+    const data = window.localStorage.getItem('LOGIN_STATUS');
+    setIsLoggedIn(JSON.parse(data));
+    setUsername(window.localStorage.getItem("USERNAME"));
+  }, []);
 
   const handleTitleChange = function(e) {
     setPostTitle(e.target.value);
@@ -26,6 +39,7 @@ function Forum() {
       data: form.serialize(),
       success(data) {
         setResult(data);
+        console.log(data);
       },
     });
   }
@@ -33,7 +47,7 @@ function Forum() {
   return(
     <div className="bg">
       <Popup trigger = {
-        <button>Create Post</button>
+        <button >Create Post</button>
       } modal nested>
         {
           close => (
@@ -62,5 +76,4 @@ function Forum() {
     </div>
   );
 }
-
 export default Forum;

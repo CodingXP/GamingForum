@@ -61,15 +61,14 @@ function NavBarUser() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const data = window.localStorage.getItem('MY_APP_STATE');
+    const data = window.localStorage.getItem('LOGIN_STATUS');
     if ( data !== false ){
-      console.log("If statement passed.");
       setIsLoggedIn(JSON.parse(data));
     }
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem('MY_APP_STATE', JSON.stringify(isLoggedIn));
+    window.localStorage.setItem("LOGIN_STATUS", JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
 
 
@@ -96,6 +95,7 @@ function NavBarUser() {
   const handleLogout = function() {
     setResult("");
     setIsLoggedIn((isLoggedIn) => !isLoggedIn);
+    localStorage.removeItem("USERNAME");
   }
 
   const handleSubmit = function(e) {
@@ -115,11 +115,12 @@ function NavBarUser() {
         setResult(data);
         if (data == username){
           setIsLoggedIn(true);
-          setUsername(username);
-          setPassword(password);
+          window.localStorage.setItem("USERNAME", JSON.stringify(username));
         }
       },
     });
+
+    
   };
 
   return (

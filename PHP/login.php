@@ -1,7 +1,7 @@
 <?php
 include "dbcon.php";
 function logUser($user, $pass) {
-    $conn = openCon("localhost", "root", "", "gaming_forum");
+    $conn = openCon("localhost", "root", "", "gamingforum");
 
     $user = dataValidation($user, $conn);
     $pass = dataValidation($pass, $conn);

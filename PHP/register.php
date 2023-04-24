@@ -2,7 +2,7 @@
 include "dbcon.php";
 function regUser($name, $surname, $email, $user, $pass) {
     // Open connection with localhost, where username is root and there is no password, connecting to the gaming_forum database.
-    $conn = openCon("localhost", "root", "", "gaming_forum");
+    $conn = openCon("localhost", "root", "", "gamingforum");
 
     // Validates input data to prevent malicous activity and SQL injections. (dbcon.php has the func).
     $name = dataValidation($name, $conn);
