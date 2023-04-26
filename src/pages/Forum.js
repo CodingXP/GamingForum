@@ -11,14 +11,12 @@ function Forum() {
   const [postDesc, setPostDesc] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
-  const [result, setResult] = useState("");
-  var today = new Date();
-  const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
   useEffect(() => {
     const data = window.localStorage.getItem('LOGIN_STATUS');
     setIsLoggedIn(JSON.parse(data));
-    setUsername(window.localStorage.getItem("USERNAME"));
+    const user = window.localStorage.getItem("USERNAME");
+    setUsername(JSON.parse(user));
   }, []);
 
   const handleTitleChange = function(e) {
@@ -29,50 +27,62 @@ function Forum() {
     setPostDesc(e.target.value);
   }
 
+
   const handleSubmit = function(e) {
     e.preventDefault();
     const form = $(e.target);
+    setPostDesc("");
+    setPostTitle("");
 
     $.ajax({
       type: "POST",
       url: form.attr("action"),
-      data: form.serialize(),
+      data: {
+        title: {postTitle},
+        desc: {postDesc},
+        username: {username}
+      },
       success(data) {
-        setResult(data);
-        console.log(data);
+        console.log(data); 
       },
     });
   }
 
   return(
-    <div className="bg">
-      <Popup trigger = {
-        <button >Create Post</button>
-      } modal nested>
-        {
-          close => (
-            <div className="postPopup">
-              <div className="createPostDiv">
-                <img className="createImg" src={post} alt="Create a post."></img>
-                <button className="button closeBtn" onClick={() => close()}>Close</button>
+    <div className="forum">
+      <div className="postCreation">
+        {isLoggedIn && <Popup trigger = {
+          <button className="createButton">Create Post</button>
+        } modal nested>
+          {
+            close => (
+              <div className="postPopup">
+                <div className="createPostDiv">
+                  <img className="createImg" src={post} alt="Create a post."></img>
+                  <button className="button closeBtn" onClick={() => close()}>Close</button>
+                </div>
+                <form action="http://localhost:8000/forum.php" method="POST" onSubmit={(event) => handleSubmit(event)}>
+                  <div>
+                    <img alt="Write a post title:" src={postTitleImg} className="titleImg"></img>
+                    <input id="title" name="title" value={postTitle} onChange={(event) => handleTitleChange(event)} className="userInput postTitle" type="text"></input>
+                  </div>
+                  <div>
+                    <img alt="Write the post's description:" src={postDescImg} className="descImg"></img>
+                    <textarea id="desc" name="desc" value={postDesc} onChange={(event) => handleDescChange(event)} className="userInput postDesc" type="text"></textarea>
+                  </div>
+                  <div>
+                    <button className="button postButton" name="create" type="submit">Create Post</button>
+                  </div>
+                </form>
               </div>
-              <form action="http://localhost:8000/forum.php" method="POST" onSubmit={(event) => handleSubmit(event)}>
-                <div className="postTitleDiv">
-                  <img alt="Write a post title:" src={postTitleImg}></img>
-                  <input id="title" name="title" value={postTitle} onChange={(event) => handleTitleChange(event)} className="input postTitle" type="text"></input>
-                </div>
-                <div>
-                  <img alt="Write the post's description:" src={postDescImg} className="descImg"></img>
-                  <textarea id="desc" name="desc" value={postDesc} onChange={(event) => handleDescChange(event)} className="input postDesc" type="text"></textarea>
-                </div>
-                <div>
-                  <button className="button" name="create" type="submit">Create Post</button>
-                </div>
-              </form>
-            </div>
-          )
-        }
-      </Popup>
+            )
+          }
+        </Popup>}
+        {!isLoggedIn && <h2 className="error">You need to be logged in to create posts!</h2>}
+      </div>
+      <div className="posts"> 
+          
+      </div>
     </div>
   );
 }

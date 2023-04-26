@@ -7,10 +7,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-image: url(./images/background.png);
+  background-color: #fec375;
 }
 
 p {
@@ -28,14 +25,6 @@ p {
   background-image: url("/src/images/header.jpg");
   image-rendering: pixelated;
 
-}
-
-.input {
-  font-family: "Stardew Valley"; 
-  background-color: #e2a662;
-  border: #571404 solid 2px;
-  height: 30px;
-  margin-bottom: 10px;
 }
 
 .button {
@@ -82,6 +71,10 @@ p {
   display: flex;
   position: absolute;
   right: 100px;
+}
+
+.userButton {
+  width: fit-content;
 }
 
 .regPopup {
@@ -135,6 +128,9 @@ p {
   font-family: "Stardew Valley";
   background-color: #ffd789;
   font-weight: 600;
+  border: #672b0c 2px solid;
+  height: 30px;
+  margin-bottom: 10px;
 }
 
 
@@ -148,9 +144,16 @@ p {
 }
 
 .postTitle {
- width: 400px;
+ width: 600px;
  height: 34px;
- margin-left: 10px;
+ margin-left: 100px;
+ margin-top: 7.5px;
+}
+
+.titleImg {
+  position: relative;
+  left: 50%;
+  margin-left: -99px;
 }
 
 .postDesc {
@@ -162,9 +165,16 @@ p {
 }
 
 .descImg {
-  display: flex;
-  margin-left: 264px;
-  margin-top: 30px; 
+  margin-top: 7.5px;
+  position: relative;
+  left: 50%;
+  margin-left: -133.5px;
+}
+
+.postButton {
+  position: relative;
+  left: 50%;
+  margin-left: -50px;
 }
 
 .popup-overlay {
@@ -174,14 +184,6 @@ p {
 .createPostDiv {
   display: flex;
   justify-content: space-between;
-}
-
-.postTitleDiv {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  
 }
 
 .userDrop {
@@ -202,7 +204,7 @@ p {
   font-size: 16px;
   text-align: center;
   width: 100px;
-  height: 40px;
+  height: 40px; 
 }
 
 .userDrop button:hover {
@@ -215,4 +217,51 @@ p {
 
 li.dropdown {
   display: inline-block;
+}
+
+.createButton {
+  margin-top: 25px;
+  background-color: #fec375;
+  border: 2px solid #672b0c;
+  font-family: "Stardew Valley";
+  color: #571404;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 800;
+  width: 150px;
+  height: 40px;
+}
+
+.createButton:hover {
+  background-color: #e2a662;
+}
+.createButton:focus {
+  background-color: #e2a662;
+}
+
+.forum {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin-left: 100px;
+  margin-top: 50px;
+}
+
+.error{
+  color: #ce5252;
+  font-family: "Stardew Valley";
+}
+
+.posts {
+  border: 3px solid #571404;
+  width: 1000px;
+  margin-left: 50px;
+  height: fit-content;
+  min-height: 100px;
+}
+
+.postCreation {
+  height: 200px;
+  width: 250px;
+  border: #672b0c 3px solid
 }

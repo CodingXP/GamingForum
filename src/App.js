@@ -1,5 +1,5 @@
 import "./styles.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import { Component } from "react";
 import {useState, useEffect} from "react";
 import $ from "jquery"
@@ -55,22 +55,40 @@ function NavBarUser() {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [result, setResult] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() =>{
+    const initial = JSON.parse(localStorage.getItem("LOGIN_STATUS"));
+    return initial || false;
+  });
+  const [username, setUsername] = useState(() => {
+    const initial = JSON.parse(localStorage.getItem("USERNAME"));
+    return initial || "";
+  });
 
   useEffect(() => {
-    const data = window.localStorage.getItem('LOGIN_STATUS');
-    if ( data !== false ){
+    const data = window.localStorage.getItem("LOGIN_STATUS");
+    if ( data !== null ){
       setIsLoggedIn(JSON.parse(data));
+      window.localStorage.setItem("LOGIN_STATUS", JSON.stringify(isLoggedIn));
     }
   }, []);
+
+  useEffect (() => {
+    const user = window.localStorage.getItem("USERNAME");
+    if (user !== ""){
+      setUsername(JSON.parse(user));
+      window.localStorage.setItem("USERNAME", JSON.stringify(username));
+    }
+  }, [])
 
   useEffect(() => {
     window.localStorage.setItem("LOGIN_STATUS", JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    window.localStorage.setItem("USERNAME", JSON.stringify(username));
+  }, [username]);
 
   const handleNameChange = function(e) {
     setName(e.target.value);
@@ -93,7 +111,7 @@ function NavBarUser() {
   }
   
   const handleLogout = function() {
-    setResult("");
+    setUsername("");
     setIsLoggedIn((isLoggedIn) => !isLoggedIn);
     localStorage.removeItem("USERNAME");
   }
@@ -116,6 +134,7 @@ function NavBarUser() {
         if (data == username){
           setIsLoggedIn(true);
           window.localStorage.setItem("USERNAME", JSON.stringify(username));
+          $(location).attr('href','/');
         }
       },
     });
@@ -158,7 +177,7 @@ function NavBarUser() {
             <form className="logFields" action="http://localhost:8000/login.php" method="POST" onSubmit={(event) => handleSubmit(event)} spellCheck="false">
             <img className="logImg" alt="Login" src={loginImg}></img>
               <div>
-                <input className="input userInput" type="text" id="username" name="username" value={username} onChange={(event) => handleUserChange(event)} placeholder="Username"></input>
+                <input className="input userInput" type="text" id="username" name="username" value={username} onChange={(event) => handleUserChange(event)} placeholder="Username" autoFocus></input>
                 <input className="input userInput" type="password" id="password" name="password" value={password} onChange={(event) => handlePassChange(event)} placeholder="Password"></input>
                 <button className="button" type="submit">Login</button>
               </div>
@@ -171,7 +190,7 @@ function NavBarUser() {
     <div>
     {isLoggedIn && <li className="dropdown">
       <div>
-        <button className="button">{result}</button>
+        <button className="button userButton">{username}</button>
         <div className="userDrop">
           <NavLink route="/profile" btn="Profile" />
           <Link to={"/"}>

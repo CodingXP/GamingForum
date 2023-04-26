@@ -2,7 +2,6 @@
 include "dbcon.php";
 
 function postID() {
-    // echo "PostID func called.";
     $conn = openCon("localhost", "root", "", "gamingforum");
 
     $idQuery = "SELECT postID FROM posts;";
@@ -21,19 +20,17 @@ function postID() {
 
 function createPost($id, $title, $desc, $date, $user) {
     $conn = openCon("localhost", "root", "", "gamingforum");
-    // echo "Post creation func called.";
 
     $title = dataValidation($title, $conn);
     $desc = dataValidation($desc, $conn);
 
     $query = "INSERT INTO posts (postId, postName, postDesc, postDate, username) 
         VALUES ('{$id}', '{$title}', '{$desc}', '{$date}', '{$user}')";
-    // $conn->query($query);
+    $conn->query($query);
     closeCon($conn);
 
-    echo($title);
+    echo(1);
 }
-
-createPost(postID(), $_POST["title"], $_POST["desc"], $_POST["date"], $_POST["user"]);
+createPost(postID(), $_POST["title"]["postTitle"], $_POST["desc"]["postDesc"], date("Y/m/d"), $_POST["username"]["username"]);
 // catchfunc($_POST['user'], $_POST['date']);
 ?>
