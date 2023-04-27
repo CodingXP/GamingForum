@@ -1,6 +1,6 @@
 <?php 
 include "dbcon.php";
-function regUser($name, $surname, $email, $user, $pass) {
+function regUser($name, $surname, $email, $user, $pass, $isAdmin) {
     // Open connection with localhost, where username is root and there is no password, connecting to the gaming_forum database.
     $conn = openCon("localhost", "root", "", "gamingforum");
 
@@ -11,8 +11,8 @@ function regUser($name, $surname, $email, $user, $pass) {
     $user = dataValidation($user, $conn);
     $pass = dataValidation($pass, $conn);
 
-    $query = "INSERT INTO users (name, surname, email, username, PASSWORD) 
-        VALUES ('{$name}', '{$surname}', '{$email}', '{$user}', '{$pass}')";
+    $query = "INSERT INTO users (name, surname, email, username, PASSWORD, isAdmin) 
+        VALUES ('{$name}', '{$surname}', '{$email}', '{$user}', '{$pass}', '{$isAdmin}')";
 
     echo $user;
 
@@ -21,5 +21,5 @@ function regUser($name, $surname, $email, $user, $pass) {
     closeCon($conn);
 }
 
-regUser($_POST["name"], $_POST["surname"], $_POST["email"], $_POST["username"], $_POST["password"]);
+regUser($_POST["name"], $_POST["surname"], $_POST["email"], $_POST["username"], $_POST["password"], false);
 ?>

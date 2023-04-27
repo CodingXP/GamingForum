@@ -10,7 +10,10 @@ function postID() {
 
     closeCon($conn);
 
-    if($idCount === 0){
+    if($idCount == 0){
+        return 0;
+    }
+    else if(!in_array(0, $idResult->fetch_array())){
         return 0;
     }
     else{
@@ -24,13 +27,10 @@ function createPost($id, $title, $desc, $date, $user) {
     $title = dataValidation($title, $conn);
     $desc = dataValidation($desc, $conn);
 
-    $query = "INSERT INTO posts (postId, postName, postDesc, postDate, username) 
+    $query = "INSERT INTO posts (postId, postName, postDesc, postDate, postUsername) 
         VALUES ('{$id}', '{$title}', '{$desc}', '{$date}', '{$user}')";
     $conn->query($query);
     closeCon($conn);
-
-    echo(1);
 }
 createPost(postID(), $_POST["title"]["postTitle"], $_POST["desc"]["postDesc"], date("Y/m/d"), $_POST["username"]["username"]);
-// catchfunc($_POST['user'], $_POST['date']);
 ?>

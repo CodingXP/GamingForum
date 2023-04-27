@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import React from "react";
+import $ from "jquery";
 
 export default function Profile() {
     const [username, setUsername] = useState("");
@@ -7,23 +8,29 @@ export default function Profile() {
     const [name, setName] = useState("");
     const [surname, setSurname] =  useState("");
 
+    // useEffect(() => {
+    //     const user = window.localStorage.getItem("USERNAME");
+    //     setUsername(JSON.parse(user));
+    //     console.log(user);
+    //     handleInfoLoad();
+    // }, [])
+
     useEffect(() => {
         handleInfoLoad();
-    }, [])
+      }, []);
 
     const handleInfoLoad = function() {
-        var user = window.localStorage.getItem("USERNAME");
-        setUsername(JSON.parse(user));
+        const user = window.localStorage.getItem("USERNAME");
 
         $.ajax({
             type: "GET",
-            url: "http://localhost:8000/forum.php",
+            url: "http://localhost:8000/login.php",
             data: {
-
+                username: user
             },
             success(data) {
-              
-            },
+                console.log(data);
+            }
           });
     }
 

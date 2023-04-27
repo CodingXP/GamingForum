@@ -1,5 +1,18 @@
 <?php
 include "dbcon.php";
+
+function loadUser($user){
+    $conn = openCon("localhost", "root", "", "gamingforum");
+
+    $userQuery = "SELECT * FROM users WHERE username = '$user'";
+    $userResult = $conn->query($userQuery);
+
+    $row = $userResult->fetch_all();
+    print_r ($row);
+
+    closeCon($conn);
+}
+
 function logUser($user, $pass) {
     $conn = openCon("localhost", "root", "", "gamingforum");
 
@@ -8,17 +21,23 @@ function logUser($user, $pass) {
 
     $userQuery = "SELECT * FROM users WHERE username = '$user' AND PASSWORD = '$pass'";
     $userResult = $conn->query($userQuery);
-    $adminQuery = "SELECT * FROM admin WHERE username = '$user' AND PASSWORD = '$pass'";
-    $adminResult = $conn->query(($adminQuery));
 
     $userCount = mysqli_num_rows($userResult);
-    $adminCount = mysqli_num_rows($adminResult);
 
-    if ($userCount === 1 || $adminCount === 1) {
-        echo($user);
+    if ($userCount === 1) {
+        $userRow = $userResult->fetch_assoc();
+        $result = array("username" => $userRow['username'], "isAdmin" => $userRow['isAdmin']);
+        echo json_encode($result);
     }
 
     closeCon($conn);
 }
-logUser($_POST['username'], $_POST['password']);
+if (isset($_POST['username'])){
+    logUser($_POST['username'], $_POST['password']);
+}
+
+else if (isset($_GET['username'])){
+    loadUser($_GET['username']);
+}
+
 ?>

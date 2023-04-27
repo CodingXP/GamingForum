@@ -1,10 +1,20 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect, createElement } from "react";
+import Post from "./Post";
 import Popup from "reactjs-popup";
 import post from "../images/post.png"
 import postTitleImg from "../images/postTitle.png";
 import postDescImg from "../images/postDesc.png";
 import $ from "jquery";
+
+// function PostLink({title}) {
+//   return createElement("h2", {className: "test"}, createElement("i", null, title));
+// }
+
+// function PostGen() {
+//     for (let i; i<10; i++){
+//       return createElement(PostLink, {title: "Hi"});
+//     }
+// }
 
 function Forum() {
   const [postTitle, setPostTitle] = useState("");
@@ -12,11 +22,14 @@ function Forum() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
 
+
   useEffect(() => {
     const data = window.localStorage.getItem('LOGIN_STATUS');
     setIsLoggedIn(JSON.parse(data));
     const user = window.localStorage.getItem("USERNAME");
     setUsername(JSON.parse(user));
+
+    postLoading();
   }, []);
 
   const handleTitleChange = function(e) {
@@ -27,7 +40,22 @@ function Forum() {
     setPostDesc(e.target.value);
   }
 
-
+  const postLoading = function() {
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:8000/posts.php",
+      success(data) {
+        data = JSON.parse(data);
+        console.log(data);
+        for(let i=0; i<data.length; i++){
+          $("#post").append(data[i]['postName'] + "|" + data[i]['postDesc'] +"|" + data[i]['postUsername']);
+          $("#post").append("<br>");
+          $("#post").append("<br>");
+        }
+      },
+    })
+  }
+  
   const handleSubmit = function(e) {
     e.preventDefault();
     const form = $(e.target);
@@ -43,7 +71,6 @@ function Forum() {
         username: {username}
       },
       success(data) {
-        console.log(data); 
       },
     });
   }
@@ -80,8 +107,8 @@ function Forum() {
         </Popup>}
         {!isLoggedIn && <h2 className="error">You need to be logged in to create posts!</h2>}
       </div>
-      <div className="posts"> 
-          
+      <div className="posts">
+        <h2 id="post"></h2>
       </div>
     </div>
   );

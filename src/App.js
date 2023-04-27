@@ -1,5 +1,5 @@
 import "./styles.css";
-import { BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, json} from "react-router-dom";
 import { Component } from "react";
 import {useState, useEffect} from "react";
 import $ from "jquery"
@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import NoPage from "./pages/NoPage";
 import Forum from "./pages/Forum";
 import Profile from "./pages/Profile";
+import Post from "./pages/Post";
 import Popup from "reactjs-popup";
 import loginImg from "./images/loginImg.png";
 import registerImg from "./images/registerImg.png";
@@ -34,6 +35,7 @@ class App extends Component {
             <Route path="*" element={<NoPage />}></Route>
             <Route path="/Forum" element={<Forum />}></Route>
             <Route path="/Profile" element={<Profile />}></Route>
+            <Route path="/Forum/:postId" element={<Post />}></Route>
           </Routes>
         </div>
       </Router>
@@ -56,7 +58,6 @@ function NavBarUser() {
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [result, setResult] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(() =>{
     const initial = JSON.parse(localStorage.getItem("LOGIN_STATUS"));
     return initial || false;
@@ -65,6 +66,10 @@ function NavBarUser() {
     const initial = JSON.parse(localStorage.getItem("USERNAME"));
     return initial || "";
   });
+  const [isAdmin, setIsAdmin] = useState(() => {
+    const initial = JSON.parse(localStorage.getItem("ADMIN_STATUS"));
+    return initial || false;
+  })
 
   useEffect(() => {
     const data = window.localStorage.getItem("LOGIN_STATUS");
@@ -83,12 +88,24 @@ function NavBarUser() {
   }, [])
 
   useEffect(() => {
+    const admin = window.localStorage.getItem("ADMIN_STATUS");
+    if (admin !== null){
+      setIsAdmin(JSON.parse(admin));
+      window.localStorage.setItem("ADMIN_STATUS", JSON.stringify(isAdmin));
+    }
+  }, [])
+
+  useEffect(() => {
     window.localStorage.setItem("LOGIN_STATUS", JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
 
   useEffect(() => {
     window.localStorage.setItem("USERNAME", JSON.stringify(username));
   }, [username]);
+
+  useEffect(() => {
+    window.localStorage.setItem("ADMIN_STATUS", JSON.stringify(isAdmin));
+  }, [isAdmin])
 
   const handleNameChange = function(e) {
     setName(e.target.value);
@@ -113,6 +130,9 @@ function NavBarUser() {
   const handleLogout = function() {
     setUsername("");
     setIsLoggedIn((isLoggedIn) => !isLoggedIn);
+    if(isAdmin === true){
+      setIsAdmin((isAdmin) => !isAdmin);
+    }
     localStorage.removeItem("USERNAME");
   }
 
@@ -130,8 +150,11 @@ function NavBarUser() {
       url: form.attr("action"),
       data: form.serialize(),
       success(data) {
-        setResult(data);
-        if (data == username){
+        data = JSON.parse(data);
+        if (data['username'] == username){
+          if(data['isAdmin'] == 1){
+            setIsAdmin(true);
+          }
           setIsLoggedIn(true);
           window.localStorage.setItem("USERNAME", JSON.stringify(username));
           $(location).attr('href','/');
