@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import NoPage from "./pages/NoPage";
 import Forum from "./pages/Forum";
 import Profile from "./pages/Profile";
-import Post from "./pages/Post";
+import PostPage from "./pages/PostPage";
 import Popup from "reactjs-popup";
 import loginImg from "./images/loginImg.png";
 import registerImg from "./images/registerImg.png";
@@ -35,7 +35,7 @@ class App extends Component {
             <Route path="*" element={<NoPage />}></Route>
             <Route path="/Forum" element={<Forum />}></Route>
             <Route path="/Profile" element={<Profile />}></Route>
-            <Route path="/Forum/:postId" element={<Post />}></Route>
+            <Route path="/Forum/:postID" element={<PostPage />}></Route>
           </Routes>
         </div>
       </Router>
@@ -150,15 +150,25 @@ function NavBarUser() {
       url: form.attr("action"),
       data: form.serialize(),
       success(data) {
-        data = JSON.parse(data);
-        if (data['username'] == username){
-          if(data['isAdmin'] == 1){
-            setIsAdmin(true);
-          }
-          setIsLoggedIn(true);
-          window.localStorage.setItem("USERNAME", JSON.stringify(username));
-          $(location).attr('href','/');
+      if (data) {
+        try {
+          data = JSON.parse(data);
+          console.log(data);
+          if (data['username'] == username){
+            if(data['isAdmin'] == 1){
+              setIsAdmin(true);
+            }
+            setIsLoggedIn(true);
+            window.localStorage.setItem("USERNAME", JSON.stringify(username));
+            $(location).attr('href','/');
+          } 
+        } catch (error) {
+          console.log(error);
         }
+      }
+      else {
+        alert("Incorrect login data!");
+      }
       },
     });
 

@@ -32,5 +32,22 @@ function createPost($id, $title, $desc, $date, $user) {
     $conn->query($query);
     closeCon($conn);
 }
-createPost(postID(), $_POST["title"]["postTitle"], $_POST["desc"]["postDesc"], date("Y/m/d"), $_POST["username"]["username"]);
+
+function postLoading() {
+    $conn = openCon('localhost', 'root', '', 'gamingforum');
+
+    $query = "SELECT postName, postDesc, postUsername, postID FROM posts ORDER BY postID";
+    $result = $conn->query($query);
+
+    $row = $result->fetch_all(MYSQLI_ASSOC);
+    echo json_encode($row);
+    closeCon($conn);
+}
+
+if (isset($_POST['title']['postTitle'])){
+    createPost(postID(), $_POST["title"]["postTitle"], $_POST["desc"]["postDesc"], date("Y/m/d"), $_POST["username"]["username"]);
+}
+else {
+    postLoading();
+}
 ?>

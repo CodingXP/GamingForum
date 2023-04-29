@@ -1,16 +1,16 @@
 <?php
 include "dbcon.php";
+function loadPost($postID) {
+    $conn = openCon("localhost", "root", "", "gamingforum");
 
-function postLoading() {
-    $conn = openCon('localhost', 'root', '', 'gamingforum');
-
-    $query = "SELECT postName, postDesc, postUsername FROM posts ORDER BY postID DESC";
+    $query = "SELECT postName, postDesc, postDate, postUsername FROM posts WHERE postID = '{$postID}'";
     $result = $conn->query($query);
 
     $row = $result->fetch_all(MYSQLI_ASSOC);
     echo json_encode($row);
+
     closeCon($conn);
 }
 
-postLoading();
+loadPost($_GET['postID']);
 ?>

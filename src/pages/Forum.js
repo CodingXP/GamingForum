@@ -1,27 +1,35 @@
-import React, { useState, useEffect, createElement } from "react";
-import Post from "./Post";
+import {Link} from "react-router-dom";
+import PostPage from "./PostPage";
 import Popup from "reactjs-popup";
 import post from "../images/post.png"
+import React, { useState, useEffect} from "react"
 import postTitleImg from "../images/postTitle.png";
 import postDescImg from "../images/postDesc.png";
 import $ from "jquery";
 
-// function PostLink({title}) {
-//   return createElement("h2", {className: "test"}, createElement("i", null, title));
-// }
-
-// function PostGen() {
-//     for (let i; i<10; i++){
-//       return createElement(PostLink, {title: "Hi"});
-//     }
-// }
+function Post({title, user, postID}) {
+  return(
+    <div className="postThumbnail">
+      <div className="postName">
+        <Link to={`/forum/${postID}`}>
+          <span>{title}</span>
+        </Link>
+      </div>
+      <div className="postUser">
+        <h2>{user}</h2>
+      </div>
+      
+    </div>
+    
+  );
+}
 
 function Forum() {
   const [postTitle, setPostTitle] = useState("");
   const [postDesc, setPostDesc] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
-
+  const [postArray, setPostArray] = useState([]);
 
   useEffect(() => {
     const data = window.localStorage.getItem('LOGIN_STATUS');
@@ -43,14 +51,16 @@ function Forum() {
   const postLoading = function() {
     $.ajax({
       type: "GET",
-      url: "http://localhost:8000/posts.php",
+      url: "http://localhost:8000/forum.php",
+      data: {
+      },
       success(data) {
-        data = JSON.parse(data);
-        console.log(data);
-        for(let i=0; i<data.length; i++){
-          $("#post").append(data[i]['postName'] + "|" + data[i]['postDesc'] +"|" + data[i]['postUsername']);
-          $("#post").append("<br>");
-          $("#post").append("<br>");
+        if (data) {
+          data = JSON.parse(data);
+          setPostArray(data.map((post, key) => <Post title={post.postName} user={post.postUsername} key={post.PostID} postID={key} />).reverse() )
+        }
+        else {
+          console.log("Empty data recieved...");
         }
       },
     })
@@ -75,6 +85,7 @@ function Forum() {
     });
   }
 
+
   return(
     <div className="forum">
       <div className="postCreation">
@@ -95,7 +106,7 @@ function Forum() {
                   </div>
                   <div>
                     <img alt="Write the post's description:" src={postDescImg} className="descImg"></img>
-                    <textarea id="desc" name="desc" value={postDesc} onChange={(event) => handleDescChange(event)} className="userInput postDesc" type="text"></textarea>
+                    <textarea maxLength="500" id="desc" name="desc" value={postDesc} onChange={(event) => handleDescChange(event)} className="userInput postDesc" type="text"></textarea>
                   </div>
                   <div>
                     <button className="button postButton" name="create" type="submit">Create Post</button>
@@ -108,7 +119,7 @@ function Forum() {
         {!isLoggedIn && <h2 className="error">You need to be logged in to create posts!</h2>}
       </div>
       <div className="posts">
-        <h2 id="post"></h2>
+        {postArray}
       </div>
     </div>
   );

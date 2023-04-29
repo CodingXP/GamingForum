@@ -8,13 +8,6 @@ export default function Profile() {
     const [name, setName] = useState("");
     const [surname, setSurname] =  useState("");
 
-    // useEffect(() => {
-    //     const user = window.localStorage.getItem("USERNAME");
-    //     setUsername(JSON.parse(user));
-    //     console.log(user);
-    //     handleInfoLoad();
-    // }, [])
-
     useEffect(() => {
         handleInfoLoad();
       }, []);
