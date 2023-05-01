@@ -14,6 +14,7 @@ export default function Profile() {
 
     const handleInfoLoad = function() {
         const user = window.localStorage.getItem("USERNAME");
+        setUsername(JSON.parse(user));
 
         $.ajax({
             type: "GET",
@@ -22,6 +23,7 @@ export default function Profile() {
                 username: user
             },
             success(data) {
+                data = JSON.parse(data);
                 console.log(data);
             }
           });

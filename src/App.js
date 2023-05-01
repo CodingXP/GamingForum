@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Link, json} from "react-router-
 import { Component } from "react";
 import {useState, useEffect} from "react";
 import $ from "jquery"
-import About from "./pages/About";
 import Home from "./pages/Home";
 import NoPage from "./pages/NoPage";
 import Forum from "./pages/Forum";
@@ -24,14 +23,11 @@ class App extends Component {
             <div className="navBar">
               <NavLink route="/" btn="Home" />
               <NavLink route="/forum" btn="Forum" />
-              <NavLink route="/about" btn="About" />
-              <NavLink route="/404" btn="404" />
               <NavBarUser />  
             </div>
           </div>
           <Routes>
             <Route path="/" element={<Home />}></Route>
-            <Route path="/About" element={<About />}></Route>
             <Route path="*" element={<NoPage />}></Route>
             <Route path="/Forum" element={<Forum />}></Route>
             <Route path="/Profile" element={<Profile />}></Route>

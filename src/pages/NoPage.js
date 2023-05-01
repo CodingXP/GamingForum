@@ -4,7 +4,8 @@ function NoPage() {
   return(
     <div className="bg">
       <div>
-        <p>404 error!</p>
+        <h2 className="error">404 error...</h2>
+        <h2 className="error">Please reload the page or check your internet connection...</h2>
       </div>
     </div>
     

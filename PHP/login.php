@@ -4,11 +4,11 @@ include "dbcon.php";
 function loadUser($user){
     $conn = openCon("localhost", "root", "", "gamingforum");
 
-    $userQuery = "SELECT * FROM users WHERE username = '$user'";
-    $userResult = $conn->query($userQuery);
+    $query = "SELECT name, surname, email, username FROM users WHERE username = '{$user}'";
+    $result = $conn->query($query);
 
-    $row = $userResult->fetch_all();
-    print_r ($row);
+    $row = $result->fetch_all(MYSQLI_ASSOC);
+    echo json_encode($row);
 
     closeCon($conn);
 }

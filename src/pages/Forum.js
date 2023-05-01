@@ -57,7 +57,7 @@ function Forum() {
       success(data) {
         if (data) {
           data = JSON.parse(data);
-          setPostArray(data.map((post, key) => <Post title={post.postName} user={post.postUsername} key={post.PostID} postID={key} />).reverse() )
+          setPostArray(data.map((post, key) => <Post title={post.postName} user={post.postUsername} key={post.PostID} postID={post.postID} />).reverse() )
         }
         else {
           console.log("Empty data recieved...");

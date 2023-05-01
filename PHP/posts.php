@@ -12,5 +12,9 @@ function loadPost($postID) {
     closeCon($conn);
 }
 
-loadPost($_GET['postID']);
+if (isset($_GET['postID'])){
+    loadPost($_GET['postID']);
+}
+
+
 ?>
