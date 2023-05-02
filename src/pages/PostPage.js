@@ -48,6 +48,7 @@ function PostArea({title, desc, date, user}){
         postID: {postID}
       },
       success(data) {
+        $(location).attr('href',`/forum/${postID}`);
         console.log(data);
       },
     });
@@ -58,10 +59,6 @@ function PostArea({title, desc, date, user}){
         <div className="postTitleArea">
           <h2>{title}</h2>
           <p>{desc}</p>
-        </div>
-        <div className="postButtons">
-          <button className="button">Edit</button>
-          <button className="button">Delete</button>
         </div>
         <div className="postStatArea">
           <h2>Posted on: {date}</h2>
@@ -108,8 +105,8 @@ function PostPage() {
                 date={comment.commentDate}
                 text={comment.commentText}
                 username={comment.commentUsername}
-              />
-            ));
+              />).reverse()
+            );
           }
           else {
             console.log("Empty data received...");

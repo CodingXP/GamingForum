@@ -395,8 +395,6 @@ li.dropdown {
   word-break: break-all;
 }
 
-
-
 .comment p {
   margin-left: 10px;
   font-size: medium;
@@ -410,4 +408,11 @@ li.dropdown {
   min-width: auto;
   border-left: #571404 3px solid;
   padding: 5px;
+}
+
+.deleteButton {
+  color: red;
+  width: 70px;
+  margin-left: 10px;
+  margin-right: 10px;
 }

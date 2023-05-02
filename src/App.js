@@ -11,6 +11,7 @@ import PostPage from "./pages/PostPage";
 import Popup from "reactjs-popup";
 import loginImg from "./images/loginImg.png";
 import registerImg from "./images/registerImg.png";
+import { isSpreadAssignment } from "typescript";
 class App extends Component {
   render() {
     return (
@@ -219,7 +220,7 @@ function NavBarUser() {
     <div>
     {isLoggedIn && <li className="dropdown">
       <div>
-        <button className="button userButton">{username}</button>
+        <button className="button userButton" style={{color: isAdmin ? '#801fe2' : ''}}>{username}</button>
         <div className="userDrop">
           <NavLink route="/profile" btn="Profile" />
           <Link to={"/"}>

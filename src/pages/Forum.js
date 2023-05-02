@@ -8,6 +8,32 @@ import postDescImg from "../images/postDesc.png";
 import $ from "jquery";
 
 function Post({title, user, postID}) {
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const admin = window.localStorage.getItem("ADMIN_STATUS");
+    setIsAdmin(JSON.parse(admin));
+  }, [])
+
+  const deletePost = function() {
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8000/posts.php",
+      data: {
+        postID: postID
+      },
+      success(data) {
+        if(data){
+          console.log(data);
+          $(location).attr('href','/forum');
+
+        }else{
+          console.log("Empty data recieved...");
+        }
+      },
+    })
+  }
+
   return(
     <div className="postThumbnail">
       <div className="postName">
@@ -17,6 +43,9 @@ function Post({title, user, postID}) {
       </div>
       <div className="postUser">
         <h2>{user}</h2>
+      </div>
+      <div>
+        {isAdmin && <button className="button deleteButton" onClick={deletePost}>Delete</button>}
       </div>
       
     </div>
@@ -36,7 +65,7 @@ function Forum() {
     setIsLoggedIn(JSON.parse(data));
     const user = window.localStorage.getItem("USERNAME");
     setUsername(JSON.parse(user));
-
+  
     postLoading();
   }, []);
 
